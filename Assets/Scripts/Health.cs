@@ -4,7 +4,8 @@ using System.Collections;
 public class Health : MonoBehaviour {
  // The TextMesh Component
     TextMesh tm;
-    private Spawn spawn;
+    public Spawn spawn;
+
     // Use this for initialization
     void Start () {
         tm = GetComponent<TextMesh>();
@@ -21,28 +22,39 @@ public class Health : MonoBehaviour {
 		return tm.text.Length;
 	}
 
-     
-    
-	// Decrease the current Health by removing one '-'
-	public void decrease() {
+
+
+    // Decrease the current Health by removing one '-'
+    public void decrease() {
         GameObject castle = GameObject.Find("Castle");
-    GameObject monster = GameObject.Find("Monster");
-        
+        GameObject monster = GameObject.Find("Monster");
+
         if (castle)
+        {
             if (current() > 1)
-			tm.text = tm.text.Remove(tm.text.Length - 1);
-		else
-			Destroy(transform.parent.gameObject);
-           spawn.GameOver();
-        
-       
+                tm.text = tm.text.Remove(tm.text.Length - 1);
+
+            if (current() <= 1)
+            {
+                Destroy(transform.parent.gameObject);
+                spawn.GameOver();
+               Debug.Log("health gone........");
+            }
+        }
+
+
+
         if (monster)
-        
+        {
+
             if (current() > 1)
-			tm.text = tm.text.Remove(tm.text.Length - 1);
-		else
-			Destroy(transform.parent.gameObject);
-           spawn.GameOver();
+            {
+                tm.text = tm.text.Remove(tm.text.Length - 1);
+                Destroy(transform.parent.gameObject);
+            }
+            else
+                spawn.GameOver();
+        }
         
 	}
 }
